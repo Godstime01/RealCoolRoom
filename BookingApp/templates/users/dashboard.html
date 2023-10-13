@@ -1,0 +1,126 @@
+{% extends '../base.html' %}
+
+{% block customstyle %}
+<style>
+    .screen {
+        min-height: 90vh;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+
+<div class="row screen">
+    <div class="d-none d-md-flex flex-column justify-content-between col-md-2 text-bg-dark py-5">
+
+        <div class="d-flex flex-column justify-content-between flex-1 gap-4">
+            <a href="/" class="text-decoration-none p-3 text-uppercase">Home</a>
+            <a href="/profile" class="text-decoration-none p-3 text-uppercase">profile</a>
+            <a href="/bookings" class="text-decoration-none p-3 text-uppercase">see bookings</a>
+            <a href="/settings" class="text-decoration-none p-3 text-uppercase">setting</a>
+        </div>
+        <a href="/logout" class="text-decoration-none p-3 text-uppercase btn btn-danger">logout</a>
+    </div>
+
+
+    <div class="col-12 col-md-10">
+        <!-- search -->
+        <form class="container p-5 d-flex w-100 mx-auto justify-content-end row g-2">
+            <div class="col-auto">
+                <label for="search" class="visually-hidden">
+                    search
+                </label>
+                <input type="search" placeholder="search here.." class="form-control" id="search">
+            </div>
+            <div class="col-auto">
+                <button type="submit" class="btn btn-primary mb-3">Search</button>
+            </div>
+        </form>
+        {% block user_dashboard %}
+        <!-- main content -->
+
+        <div class="container p-3">
+
+            <div class="row mb-5">
+                <div class="col-sm-6 mb-3 mb-sm-0">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Profile</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.
+                            </p>
+                            <a href="#" class="btn btn-info">View profile</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <h5 class="card-title">Payments</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional content.
+                            </p>
+                            <a href="#" class="btn btn-warning">Views previous payment</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="my-4">
+                {% if user_bookings %}
+                <h2 class="capitalize text-bold">Latest bookings</h2>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Booking title</th>
+                            <th scope="col">Created</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Days to Expirations</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in user_bookings %}
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>{{ booking.title }}</td>
+                            <td>{{ booking.request_date }}</td>
+                            <td>{{ booking.status }}</td>
+                            <td>{{ booking.due_date }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+
+                <nav>
+                    {% if bookings.has_other_pages %}
+                    <ul class="pagination">
+                        {% if bookings.has_previous %}
+                        <li class="page-item"><a class="page-link" href="?page={{bookings.previous_page_numer}}">Previous</a></li>
+                        {% endif %}
+                        
+                        {% for i in bookings.paginator.page_range %}
+                            {% if bookings.number == i %}
+                                <li class="page-item active"><a class="page-link" href="?page={{ i }}">1</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?page={{ i }}">1</a></li>
+                            {% endif %}
+                        {% endfor %}
+                    
+                        {% if bookings.has_next %}
+                        <li class="page-item"><a class="page-link" href="?page={{bookings.next_page_numer}}">Next</a></li>
+                        {% endif %}
+                        
+                    </ul>
+                    {% endif %}
+                </nav>
+            </div>
+                {% else %}
+                <p class="text-center">You currently don't have any booking</p>
+                <a href="" class="btn btn-danger">Request booking</a>
+                {% endif %}
+        </div>
+
+        {% endblock %}
+    </div>
+</div>
+{% endblock %}
