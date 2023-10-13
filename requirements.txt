@@ -25,3 +25,4 @@ typing_extensions
 tzdata==2023.3
 vine
 wcwidth
+gunicorn
