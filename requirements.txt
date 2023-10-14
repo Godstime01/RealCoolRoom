@@ -26,3 +26,4 @@ tzdata==2023.3
 vine
 wcwidth
 gunicorn
+whitenoise

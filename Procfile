@@ -1,1 +1,1 @@
-web: gunicorn 'realcoolroom.wsgi'
+gunicorn RealCoolRoom.wsgi
